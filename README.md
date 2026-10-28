@@ -70,6 +70,10 @@ src/app/
 
 ## Capturas
 
+<img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/6e8b5d65-e842-4154-b36e-47c3c11397eb" />
+
+<img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/5a13f791-dcfa-43cf-a5ee-4981557e6f6f" />
+
 
 
 ## Autor
