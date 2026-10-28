@@ -68,29 +68,11 @@ src/app/
 └── pages/favorites/              → favoritos guardados
 ```
 
-## Requisitos cumplidos
-
-- [ ] R1 Listado remoto con tarjetas
-- [ ] R2 Infinite scrolling
-- [ ] R3 Búsqueda con reinicio de paginación
-- [ ] R4 Detalle y rutas
-- [ ] R5 Estados de carga, vacío y error
-- [ ] R6 Favoritos persistentes
-- [ ] R7 Servicio, interfaces y páginas separadas
-
 ## Capturas
 
-<!-- Sube las imágenes a una carpeta docs/ y enlázalas así: ![Listado](docs/listado.png) -->
 
-| Listado | Infinite scroll | Búsqueda | Detalle | Favoritos | Error |
-| --- | --- | --- | --- | --- | --- |
-| pendiente | pendiente | pendiente | pendiente | pendiente | pendiente |
-
-## Dificultades
-
-<!-- Escribe aquí lo que te costó y cómo lo resolviste. -->
 
 ## Autor
 
 Andrés Chico — Desarrollo de Software, ESFOT
-# bestiario_DnD
+
