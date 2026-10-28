@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- defaultHref: a dónde volver si se abrió el detalle directamente por URL -->
+      <ion-back-button defaultHref="/monsters"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ monster()?.name ?? 'Detalle' }}</ion-title>
+    @if (monster()) {
+      <ion-buttons slot="end">
+        <ion-button (click)="toggleFavorite()" aria-label="Favorito">
+          <!-- A17: ícono lleno si es favorito, contorno si no -->
+          <ion-icon slot="icon-only" [name]="isFav() ? 'heart' : 'heart-outline'"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    }
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (loading()) {
+    <div class="state"><ion-spinner></ion-spinner></div>
+  } @else if (error()) {
+    <div class="state">
+      <ion-text color="danger"><p>{{ error() }}</p></ion-text>
+      <ion-button (click)="load()">Reintentar</ion-button>
+    </div>
+  } @else if (monster(); as m) {
+    @if (api.imageUrl(m.image); as img) {
+      <img class="portrait" [src]="img" [alt]="m.name" />
+    }
+    <p>{{ m.size }} {{ m.type }}, {{ m.alignment }}</p>
+
+    <ion-list>
+      <ion-item><ion-label>CA</ion-label>{{ m.armor_class[0]?.value }}</ion-item>
+      <ion-item><ion-label>PG</ion-label>{{ m.hit_points }} ({{ m.hit_dice }})</ion-item>
+      <ion-item><ion-label>CR / XP</ion-label>{{ m.challenge_rating }} / {{ m.xp }}</ion-item>
+      <ion-item>
+        <ion-label>FUE · DES · CON</ion-label>
+        {{ m.strength }} · {{ m.dexterity }} · {{ m.constitution }}
+      </ion-item>
+      <ion-item>
+        <ion-label>INT · SAB · CAR</ion-label>
+        {{ m.intelligence }} · {{ m.wisdom }} · {{ m.charisma }}
+      </ion-item>
+      @if (m.languages) {
+        <ion-item><ion-label>Idiomas</ion-label>{{ m.languages }}</ion-item>
+      }
+    </ion-list>
+
+    @if (m.special_abilities?.length) {
+      <h2>Rasgos</h2>
+      @for (s of m.special_abilities; track s.name) {
+        <h3>{{ s.name }}</h3>
+        <p>{{ s.desc }}</p>
+      }
+    }
+
+    @if (m.actions?.length) {
+      <h2>Acciones</h2>
+      @for (a of m.actions; track a.name) {
+        <h3>{{ a.name }}</h3>
+        <p>{{ a.desc }}</p>
+      }
+    }
+
+    @if (m.bonus_actions?.length) {
+      <h2>Acciones adicionales</h2>
+      @for (b of m.bonus_actions; track b.name) {
+        <h3>{{ b.name }}</h3>
+        <p>{{ b.desc }}</p>
+      }
+    }
+  }
+</ion-content>

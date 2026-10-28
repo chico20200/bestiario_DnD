@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/monsters"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (favorites().length === 0) {
+    <p class="ion-padding">Aún no tienes favoritos. Marca uno con el corazón en su detalle.</p>
+  } @else {
+    <ion-list>
+      @for (f of favorites(); track f.index) {
+        <ion-item>
+          <ion-label [routerLink]="['/monsters', f.index]">
+            <h2>{{ f.name }}</h2>
+            <p>{{ f.type }} · CR {{ f.challenge_rating }}</p>
+          </ion-label>
+          <ion-button slot="end" fill="clear" color="danger" (click)="remove(f.index)">Quitar</ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "bestiario-dnd",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

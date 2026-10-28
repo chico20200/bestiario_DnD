@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Bestiario D&amp;D</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/favorites" aria-label="Favoritos">
+        <ion-icon slot="icon-only" name="heart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <!-- A14: ionInput se dispara al escribir; debounce espera 400 ms de pausa -->
+    <ion-searchbar
+      placeholder="Buscar monstruo (ej. dragon)"
+      [debounce]="400"
+      (ionInput)="onSearch($event)">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="state">
+      <ion-spinner></ion-spinner>
+      <p>Cargando monstruos…</p>
+    </div>
+  } @else if (error()) {
+    <div class="state">
+      <ion-text color="danger"><p>{{ error() }}</p></ion-text>
+      <ion-button (click)="loadFirstPage()">Reintentar</ion-button>
+    </div>
+  } @else if (monsters().length === 0) {
+    <div class="state">
+      <p>No hay monstruos que coincidan con “{{ query }}”.</p>
+    </div>
+  } @else {
+    @for (m of monsters(); track m.index) {
+      <!-- A15: navegar al detalle de ESTE monstruo -->
+      <ion-card [button]="true" [routerLink]="['/monsters', m.index]">
+        <ion-card-header>
+          <ion-card-title>{{ m.name }}</ion-card-title>
+          <ion-card-subtitle>{{ m.size }} · {{ m.type }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>CR {{ m.challenge_rating }} · HP {{ m.hit_points }}</ion-card-content>
+      </ion-card>
+    }
+
+    @if (pageError()) {
+      <div class="state">
+        <ion-text color="danger"><p>{{ pageError() }}</p></ion-text>
+        <ion-button fill="outline" (click)="retryNextPage()">Reintentar</ion-button>
+      </div>
+    }
+  }
+
+  <!-- Deshabilitado si no hay más, si falló una página o durante la primera carga -->
+  <ion-infinite-scroll
+    [disabled]="!hasMore() || !!pageError() || loading()"
+    (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingText="Cargando más monstruos…"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
